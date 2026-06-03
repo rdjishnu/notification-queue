@@ -16,4 +16,18 @@ public class Notification {
     public String getRecipient() {
         return recipient;
     }
+    public String getid(){
+        return id;
+
+    }
+    public String getMessageContent(){
+        return messageContent;
+    }
+    public String getStatus(){
+        return status;
+    }
+    public void  setstatus(String status){
+        this.status=status;
+
+    }
 }
