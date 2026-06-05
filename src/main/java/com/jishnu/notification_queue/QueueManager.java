@@ -27,4 +27,13 @@ public class QueueManager {
     public int getQueueSize() {
         return queue.size();
     }
+
+    public void displayAllNotifications() {
+        for (Notification n : queue) {
+            System.out.println("ID: " + n.getId() +
+                               " | Recipient: " + n.getRecipient() +
+                               " | Message: " + n.getMessageContent() +
+                               " | Status: " + n.getStatus());
+        }
+    }
 }

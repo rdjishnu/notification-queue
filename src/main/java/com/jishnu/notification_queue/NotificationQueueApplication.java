@@ -11,12 +11,11 @@ public class NotificationQueueApplication {
 
         QueueManager manager = new QueueManager();
 
-        manager.addNotification(new Notification("1", "rdjp@gmail.com", "Welcome!"));
-        manager.addNotification(new Notification("2", "ronny@gmail.com", "Your order is ready"));
-        manager.addNotification(new Notification("3", "lh44@gmail.com", "Reset your password"));
+        manager.addNotification(new Notification("1", "alice@gmail.com", "Welcome!"));
+        manager.addNotification(new Notification("2", "bob@gmail.com", "Your order is ready"));
+        manager.addNotification(new Notification("3", "charlie@gmail.com", "Reset your password"));
 
-        System.out.println("Queue size: " + manager.getQueueSize());
-        System.out.println("Next up: " + manager.peekNext().getRecipient());
+        manager.displayAllNotifications();
 
         manager.processNext();
         manager.processNext();
