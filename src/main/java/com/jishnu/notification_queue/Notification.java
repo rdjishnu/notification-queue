@@ -16,7 +16,7 @@ public class Notification {
     public String getRecipient() {
         return recipient;
     }
-    public String getid(){
+    public String getId(){
         return id;
 
     }
@@ -27,7 +27,7 @@ public class Notification {
         return status;
     }
     public void  setStatus(String status){
-        this.status=status;
+        this.status = status;
 
     }
 }
