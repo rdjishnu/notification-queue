@@ -16,6 +16,7 @@ public class NotificationQueueApplication {
         manager.addNotification(new Notification("3", "charlie@gmail.com", "Reset your password"));
 
         manager.displayAllNotifications();
+        manager.searchNotificationById("2");
 
         manager.processNext();
         manager.processNext();

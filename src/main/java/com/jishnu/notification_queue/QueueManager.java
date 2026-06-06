@@ -36,4 +36,17 @@ public class QueueManager {
                                " | Status: " + n.getStatus());
         }
     }
+    public Notification searchNotificationById(String id) {
+    for (Notification notification : queue) {
+        if (notification.getId().equals(id)) {
+            System.out.println("Found Notification");
+            System.out.println("ID: " + notification.getId());
+            System.out.println("Recipient: " + notification.getRecipient());
+            System.out.println("Status: " + notification.getStatus());
+            return notification;
+        }
+    }
+    System.out.println("Notification not found for ID: " + id);
+    return null;
+}
 }
