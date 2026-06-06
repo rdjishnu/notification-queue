@@ -18,8 +18,7 @@ public class NotificationQueueApplication {
         manager.displayAllNotifications();
         manager.searchNotificationById("2");
 
-        manager.processNext();
-        manager.processNext();
+       manager.processAllNotifications();
 
         System.out.println("Queue size after processing: " + manager.getQueueSize());
     }

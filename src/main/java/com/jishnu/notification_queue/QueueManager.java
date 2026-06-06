@@ -49,4 +49,9 @@ public class QueueManager {
     System.out.println("Notification not found for ID: " + id);
     return null;
 }
+public void processAllNotifications() {
+    while (!queue.isEmpty()) {
+        processNext();
+    }
+}
 }
