@@ -14,7 +14,7 @@ public class QueueManager {
     public Notification processNext() {
         Notification notification = queue.poll();
         if (notification != null) {
-            notification.setStatus("SENT");
+            notification.setStatus(NotificationStatus.SENT);
             System.out.println("Processed: " + notification.getId());
         }
         return notification;
@@ -36,22 +36,36 @@ public class QueueManager {
                                " | Status: " + n.getStatus());
         }
     }
+
     public Notification searchNotificationById(String id) {
-    for (Notification notification : queue) {
-        if (notification.getId().equals(id)) {
-            System.out.println("Found Notification");
-            System.out.println("ID: " + notification.getId());
-            System.out.println("Recipient: " + notification.getRecipient());
-            System.out.println("Status: " + notification.getStatus());
-            return notification;
+        for (Notification notification : queue) {
+            if (notification.getId().equals(id)) {
+                System.out.println("Found Notification");
+                System.out.println("ID: " + notification.getId());
+                System.out.println("Recipient: " + notification.getRecipient());
+                System.out.println("Status: " + notification.getStatus());
+                return notification;
+            }
+        }
+        System.out.println("Notification not found for ID: " + id);
+        return null;
+    }
+
+    public void processAllNotifications() {
+        while (!queue.isEmpty()) {
+            processNext();
         }
     }
-    System.out.println("Notification not found for ID: " + id);
-    return null;
-}
-public void processAllNotifications() {
-    while (!queue.isEmpty()) {
-        processNext();
+
+    public long countPendingNotifications() {
+        return queue.stream()
+                .filter(n -> n.getStatus() == NotificationStatus.PENDING)
+                .count();
     }
-}
+
+    public long countSentNotifications() {
+        return queue.stream()
+                .filter(n -> n.getStatus() == NotificationStatus.SENT)
+                .count();
+    }
 }
