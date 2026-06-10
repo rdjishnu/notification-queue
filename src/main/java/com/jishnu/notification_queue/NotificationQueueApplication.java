@@ -11,15 +11,19 @@ public class NotificationQueueApplication {
 
         QueueManager manager = new QueueManager();
 
-        manager.addNotification(new Notification("1", "alice@gmail.com", "Welcome!"));
-        manager.addNotification(new Notification("2", "bob@gmail.com", "Your order is ready"));
-        manager.addNotification(new Notification("3", "charlie@gmail.com", "Reset your password"));
+        manager.addNotification(new EmailNotification("1", "alice@gmail.com", "Welcome!", "Account Created"));
+        manager.addNotification(new SMSNotification("2", "bob@gmail.com", "Your OTP is 1234", "+91 9876543210"));
+        manager.addNotification(new PaymentNotification("3", "charlie@gmail.com", "Payment received", 999.99));
 
+        System.out.println("--- All Notifications ---");
         manager.displayAllNotifications();
-        manager.searchNotificationById("2");
 
-       manager.processAllNotifications();
+        System.out.println("Pending: " + manager.countPendingNotifications());
 
-        System.out.println("Queue size after processing: " + manager.getQueueSize());
+        System.out.println("--- Processing All ---");
+        manager.processAllNotifications();
+
+        System.out.println("Pending: " + manager.countPendingNotifications());
+        System.out.println("Queue size: " + manager.getQueueSize());
     }
 }
