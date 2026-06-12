@@ -1,13 +1,23 @@
 package com.jishnu.notification_queue;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
 public class QueueManager {
+
     private Queue<Notification> queue = new LinkedList<>();
+
+    @Autowired
+    private NotificationRepository notificationRepository;
 
     public void addNotification(Notification notification) {
         queue.add(notification);
+        notificationRepository.save(notification);
         System.out.println("Added: " + notification.getId());
     }
 
@@ -15,6 +25,7 @@ public class QueueManager {
         Notification notification = queue.poll();
         if (notification != null) {
             notification.setStatus(NotificationStatus.SENT);
+            notificationRepository.save(notification);
             System.out.println("Processed: " + notification.getId());
         }
         return notification;
@@ -29,7 +40,8 @@ public class QueueManager {
     }
 
     public void displayAllNotifications() {
-        for (Notification n : queue) {
+        List<Notification> all = notificationRepository.findAll();
+        for (Notification n : all) {
             System.out.println("ID: " + n.getId() +
                                " | Recipient: " + n.getRecipient() +
                                " | Message: " + n.getMessageContent() +
@@ -38,17 +50,7 @@ public class QueueManager {
     }
 
     public Notification searchNotificationById(String id) {
-        for (Notification notification : queue) {
-            if (notification.getId().equals(id)) {
-                System.out.println("Found Notification");
-                System.out.println("ID: " + notification.getId());
-                System.out.println("Recipient: " + notification.getRecipient());
-                System.out.println("Status: " + notification.getStatus());
-                return notification;
-            }
-        }
-        System.out.println("Notification not found for ID: " + id);
-        return null;
+        return notificationRepository.findById(id).orElse(null);
     }
 
     public void processAllNotifications() {
@@ -58,13 +60,13 @@ public class QueueManager {
     }
 
     public long countPendingNotifications() {
-        return queue.stream()
+        return notificationRepository.findAll().stream()
                 .filter(n -> n.getStatus() == NotificationStatus.PENDING)
                 .count();
     }
 
     public long countSentNotifications() {
-        return queue.stream()
+        return notificationRepository.findAll().stream()
                 .filter(n -> n.getStatus() == NotificationStatus.SENT)
                 .count();
     }

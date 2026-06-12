@@ -1,5 +1,6 @@
 package com.jishnu.notification_queue;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/notifications")
 public class NotificationController {
 
-    private final QueueManager queueManager = new QueueManager();
+    @Autowired
+    private QueueManager queueManager;
 
     @PostMapping("/add")
     public String addNotification(@RequestBody Notification notification) {
@@ -48,13 +50,14 @@ public class NotificationController {
         }
         return "Not found";
     }
-    @GetMapping("/count/pending")
-public String countPending() {
-    return "Pending: " + queueManager.countPendingNotifications();
-}
 
-@GetMapping("/count/sent")
-public String countSent() {
-    return "Sent: " + queueManager.countSentNotifications();
-}
+    @GetMapping("/count/pending")
+    public String countPending() {
+        return "Pending: " + queueManager.countPendingNotifications();
+    }
+
+    @GetMapping("/count/sent")
+    public String countSent() {
+        return "Sent: " + queueManager.countSentNotifications();
+    }
 }
