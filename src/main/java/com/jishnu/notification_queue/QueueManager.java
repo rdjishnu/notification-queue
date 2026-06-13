@@ -1,7 +1,7 @@
 package com.jishnu.notification_queue;
 
-import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Queue;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class QueueManager {
 
-    private Queue<Notification> queue = new LinkedList<>();
-
+    private Queue<Notification> queue = new PriorityQueue<>();
     @Autowired
     private NotificationRepository notificationRepository;
 
