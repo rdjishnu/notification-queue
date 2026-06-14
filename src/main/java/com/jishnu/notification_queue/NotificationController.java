@@ -60,4 +60,21 @@ public class NotificationController {
     public String countSent() {
         return "Sent: " + queueManager.countSentNotifications();
     }
+    @PostMapping("/fail/{id}")
+public String failNotification(@PathVariable String id) {
+    Notification n = queueManager.failNotification(id);
+    if (n != null) {
+        return "Failed: " + n.getId() + " | Status: " + n.getStatus();
+    }
+    return "Not found";
+}
+
+@PostMapping("/retry/{id}")
+public String retryNotification(@PathVariable String id) {
+    Notification n = queueManager.retryNotification(id);
+    if (n != null) {
+        return "ID: " + n.getId() + " | Status: " + n.getStatus() + " | RetryCount: " + n.getRetryCount();
+    }
+    return "Not found";
+}
 }
