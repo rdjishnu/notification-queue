@@ -12,6 +12,7 @@ public class Notification implements Comparable<Notification> {
     private String messageContent;
     private NotificationStatus status;
     private NotificationPriority priority;
+    private int retryCount;
 
     public Notification() {
     }
@@ -22,6 +23,7 @@ public class Notification implements Comparable<Notification> {
         this.messageContent = messageContent;
         this.status = NotificationStatus.PENDING;
         this.priority = NotificationPriority.LOW;
+        this.retryCount = 0;
     }
 
     public Notification(String id, String recipient, String messageContent, NotificationPriority priority) {
@@ -30,6 +32,7 @@ public class Notification implements Comparable<Notification> {
         this.messageContent = messageContent;
         this.status = NotificationStatus.PENDING;
         this.priority = priority;
+        this.retryCount = 0;
     }
 
     public String getId() {
@@ -54,6 +57,14 @@ public class Notification implements Comparable<Notification> {
 
     public NotificationPriority getPriority() {
         return priority;
+    }
+
+    public int getRetryCount() {
+        return retryCount;
+    }
+
+    public void setRetryCount(int retryCount) {
+        this.retryCount = retryCount;
     }
 
     @Override
