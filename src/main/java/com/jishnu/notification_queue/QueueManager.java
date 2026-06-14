@@ -69,4 +69,37 @@ public class QueueManager {
                 .filter(n -> n.getStatus() == NotificationStatus.SENT)
                 .count();
     }
+    public Notification failNotification(String id) {
+    Notification notification = notificationRepository.findById(id).orElse(null);
+    if (notification != null) {
+        notification.setStatus(NotificationStatus.FAILED);
+        notificationRepository.save(notification);
+        System.out.println("Failed: " + notification.getId());
+    }
+    return notification;
+}
+
+public Notification retryNotification(String id) {
+    Notification notification = notificationRepository.findById(id).orElse(null);
+    if (notification == null) {
+        System.out.println("Notification not found for ID: " + id);
+        return null;
+    }
+
+    if (notification.getStatus() != NotificationStatus.FAILED) {
+        System.out.println("Notification is not in FAILED state: " + id);
+        return notification;
+    }
+
+    if (notification.getRetryCount() < 3) {
+        notification.setStatus(NotificationStatus.PENDING);
+        notification.setRetryCount(notification.getRetryCount() + 1);
+        notificationRepository.save(notification);
+        System.out.println("Retried: " + notification.getId() + " | Attempt: " + notification.getRetryCount());
+    } else {
+        System.out.println("Max retries reached. Keeping FAILED: " + notification.getId());
+    }
+
+    return notification;
+}
 }
