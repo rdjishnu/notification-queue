@@ -2,16 +2,26 @@ package com.jishnu.notification_queue;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Notification implements Comparable<Notification> {
 
     @Id
     private String id;
+
+    @NotBlank(message = "Recipient cannot be empty")
     private String recipient;
+
+    @NotBlank(message = "Message content cannot be empty")
     private String messageContent;
+
     private NotificationStatus status;
+
+    @NotNull(message = "Priority cannot be null")
     private NotificationPriority priority;
+
     private int retryCount;
 
     public Notification() {
