@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/notifications")
 public class NotificationController {
@@ -17,7 +19,7 @@ public class NotificationController {
     private QueueManager queueManager;
 
     @PostMapping("/add")
-    public String addNotification(@RequestBody Notification notification) {
+    public String addNotification(@Valid @RequestBody Notification notification) {
         queueManager.addNotification(notification);
         return "Notification added: " + notification.getId();
     }
